@@ -1,0 +1,14 @@
+*.pyc
+data/curated/OriginalData_AddDerived/.DS_Store
+.DS_Store
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/BrownlowPredictorPlus.iml
+models/AFL_pipeline_RS.pickle
+models/AFL_pipeline_RS_components.pickle
+future data/
+*data/
+.vscode/extensions.json
