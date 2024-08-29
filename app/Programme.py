@@ -6,36 +6,38 @@ from datetime import date
 from Read import read_leaderboard, read_game_by_game_prediction
 
 
-
 app = Flask(__name__)
 
 
 #  HomePage
 @app.route("/")
 def home():
-    return render_template('home.html', date = date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)])
+    return render_template('home.html', date=date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)])
 
 
 @app.route("/scrape_data")
 def scrape_data():
-    subprocess.run(f'python3 crawl_scrape.py {date.today().year}', shell=True, cwd = '../scripts')
+    subprocess.run(
+        f'python3 crawl_scrape.py {date.today().year}', shell=True, cwd='../scripts')
     print('Finished Crawling')
-    subprocess.run(f'python3 process_data.py {date.today().year}', shell=True, cwd = '../scripts')
+    subprocess.run(
+        f'python3 process_data.py {date.today().year}', shell=True, cwd='../scripts')
 
-    return render_template('home.html', date = date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)])
+    return render_template('home.html', date=date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)])
 
 
 @app.route("/run_predictions")
 def run_predictions():
-    subprocess.run(f'python3 predict.py {date.today().year}', shell=True, cwd = '../scripts')
+    subprocess.run(
+        f'python3 predict.py {date.today().year}', shell=True, cwd='../scripts')
 
-    return render_template('home.html', date = date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)])
+    return render_template('home.html', date=date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)])
 
 
 @app.route("/view_game_by_game_prediction")
 def view_game_by_game_prediction():
 
-    return render_template("game_by_game.html", date = date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)], table_list = read_game_by_game_prediction())
+    return render_template("game_by_game.html", date=date.today(), tables=[read_leaderboard().to_html(classes='data', index=False)], table_list=read_game_by_game_prediction())
 
 
 @app.route("/view_algo_description")
