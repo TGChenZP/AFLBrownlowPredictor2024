@@ -25,17 +25,6 @@ def scrape(url):
     if not bool(re.search(r'Round', str(findround))):
         return False, False, False    # because our normal return returns three objects
 
-    # # Get Brownlow votes data (but input is later)
-    # brownlow = list() #Mechanism to prevent non-assignment because some pages don't have bronwlow data
-    # for i in range(len(rows)):
-    #     if re.search(r'Brownlow Votes:', str(rows[i])):
-    #         brownlow = rows[i]
-    # if brownlow:
-    #     players = brownlow.find_all('a')
-    #     brownlow = list()
-    #     for player in players:
-    #         brownlow.append(re.findall(r'>. .+<', str(player))[0].strip('<>'))
-
     # Get raw player statistics
     results = soup.find(id='matchscoretable').findNext('table')
     rows = results.find_all('tr')
@@ -409,13 +398,23 @@ if not os.path.exists(f'../future data/raw'):
     os.makedirs(f'../future data/raw')
 
 try:
-    PROCESSED_FILELIST = os.listdir(f'../future data/curated/NormalisedData')
+    PROCESSED_FILELIST = os.listdir(f'../future data/raw/OriginalData')
+    PROCESSED_FILELIST = [
+        file for file in PROCESSED_FILELIST if file[:4] == str(sys.argv[1])]
 except:
     PROCESSED_FILELIST = []
 
 # Scraper
+counter = 0
 for year in urllist:
+
     for game in year:
+
+        # games are ordered. skip if we have already scraped this game
+        if counter < len(PROCESSED_FILELIST):
+            counter += 1
+            continue
+
         test1, test2, metadata = scrape(game)
 
         if test1 != False and test2 != False and metadata != False:

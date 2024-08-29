@@ -17,6 +17,7 @@ except:
 
 filelist = [
     file for file in filelist if f'../future data/raw/NormalisedData/{file.strip("(O).csv")} (N).csv' not in processed_filelist]
+# avoid re-processing files
 
 if not os.path.exists(f'../future data/curated/OriginalData_AddDerived'):
     os.makedirs(f'../future data/curated/OriginalData_AddDerived')
@@ -71,19 +72,6 @@ normal = ['Kicks', 'Handballs', 'Disposals', 'Marks', 'Goals', 'Behinds', 'Tackl
           'Marks Outside 50', 'Tackles Outside 50', 'Behind Assists', 'Effective Disposals', 'Ineffective Disposals', 'Clangers', 'Turnovers', 'Frees Agains', 'Disposal Efficiency %', 'Supercoach']
 
 
-def get_target(norm):
-    norm[norm['Brownlow Votes'] == 3].loc[:, 'Supercoach'] = 30000
-    norm[norm['Brownlow Votes'] == 2].loc[:, 'Supercoach'] = 20000
-    norm[norm['Brownlow Votes'] == 1].loc[:, 'Supercoach'] = 10000
-
-    norm = norm.sort_values(['Supercoach'])
-    norm['rank'] = range(len(norm))
-    norm['target'] = (norm['rank'] - min(norm['rank'])) / \
-        (max(norm['rank'])-min(norm['rank']))
-
-    return norm
-
-
 for file in filelist:
 
     df = pd.read_csv(f'../future data/curated/OriginalData_AddDerived/{file}')
@@ -96,19 +84,11 @@ for file in filelist:
             norm[column] = list(df[column])
 
         elif column in normal:
-            norm[f'{column} BTN'] = norm_BT(df[column])
-            norm[f'{column} OTN'] = norm_OT(df[[column, 'HomeAway']], column)
-
-        elif column in invert:
-            norm[f'{column} BTN'] = norm_BT_inv(df[column])
-            norm[f'{column} OTN'] = norm_OT_inv(
-                df[[column, 'HomeAway']], column)
+            norm[f'{column}'] = norm_BT(df[column])
 
         else:
             # Error mechanism
             pass
-
-    norm = get_target(norm)
 
     norm.to_csv(
         f'../future data/curated/NormalisedData/{file.strip("(O).csv")} (N).csv', index=False)
