@@ -9,36 +9,27 @@
     
     <h1>Algorithm Description</h1>
     
-    1. Data was crawled and scraped from the afltables, and validated by footywire data; data were then stored by game
-    <br><br>
-    2. Additional features were generated
-    <br><br>
-    3. Features were normalised (x-mean)/sd within each game - with normalisation performed both with respect to only their team and the players on both teams.
-    <br><br>
-    4. Brownlow votes were turned into three labels using one hot encoding (i.e. 1 vote model: player with 1 vote has label 1, every other player 0; 2 vote model: player with 2 votes has label 2, every other player 0 etc); thus three final models were required
-    <br><br>
-    5. For each model, features that had abs(correlation with label) higher than 0.1 were selected
-    <br><br>
-    6. Many regression models were attempted (tuned to best validation score hyperparameter combination)
-    <br><br>
-
-    -  <em>models attempted includes: Linear Regression (with regularisation), Binomial Regression, K-Nearest Neighbour Regressor, Random Forest Regressor, AdaBoost Regressor, GradientBoost Regressor, XGB Regressor, LightGBM Regressor, CatBoost Regressor, Explainable Boosting Machine Regressor, Fully Connected Neural Network Regressor</em>
-    <br><br>
-
-    Prediction
-    <br><br>
-    7. Each game was put through the three models to get predicted outputs. 
-    <ul>
+    <ol>
+        <li>Data was crawled and scraped from AFL Tables and validated using Footywire data; the data was then stored by game.</li>
+        <li>Additional features were generated.</li>
+        <li><strong>Train-Val-Test Split:</strong> 70% of games from 2015-2022 were used as training data, with 15% used for validation and testing, respectively.</li>
+        <li>Features were normalized <code>(x - mean) / sd</code> within each game. This normalization ensures comparability between games and mitigates issues such as reduced game time during the COVID-impacted 2020 season.</li>
+        <li><strong>Targets:</strong> Targets were generated using min-max normalization of SuperCoach scores (scaled between 0-1), adjusted so that the Brownlow vote-getters in the game had the three highest scores, respectively.</li>
+        <li>Various regression models were tested, each tuned to optimize the validation score based on the best hyperparameter combinations.</li>
+        <ul>
+            <li><em>Models tested include: Linear Regression, Lasso Regression, Ridge Regression, K-Nearest Neighbor Regressor, Random Forest Regressor, AdaBoost Regressor, Gradient Boosting Regressor, XGB Regressor, LightGBM Regressor, CatBoost Regressor, HistGradientBoost Regressor, Explainable Boosting Machine Regressor, SVM Regressor, NuSVM Regressor, Multilayer Perceptron Regressor, Transformer Regressor</em></li>
+        </ul>
+    </ol>
     
-        <li>the player with highest predicted score for 3-votes model gets 3 predicted votes</li>
-        
-        <li>the player with highest predicted score for 2-votes model gets 2 predicted votes, unless they have already received 3 votes in which case the second ranked player for this model gets 2 votes</li>
-        
-        <li>the player with highest predicted score for 1-votes model gets 1 predicted votes, unless they have already received 3 votes or 2 votes in which case the second ranked player for this model gets 1 vote. If the second ranked player also has received a higher vote then the third ranked player receives 1 vote</li>
-
-    </ul>
-    8. Each game's votes are tallied up and the player with the highest vote for the season is the predicted Brownlow Winner
-    <br><br>
+    <h2>Prediction</h2>
+    
+    <ol start="7">
+        <li>Each game was processed through the model to generate predicted outputs:</li>
+        <ul>
+            <li>The three players with the highest predicted scores received 3, 2, and 1 predicted votes, respectively.</li>
+        </ul>
+        <li>The predicted votes for each game were tallied, and the player with the highest predicted votes for the season was declared the predicted Brownlow winner.</li>
+    </ol>
 
 
     <p>
