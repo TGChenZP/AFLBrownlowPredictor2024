@@ -5,8 +5,8 @@ import os
 from collections import defaultdict as dd
 import sys
 
-with open(f'../models/final_models/gbr.pickle', 'rb') as f:
-    gbr = pickle.load(f)
+with open(f'../models/final_models/retrain_mlp.pickle', 'rb') as f:
+    model = pickle.load(f)
 
 with open('../models/feature_importance_ordering.pickle', 'rb') as f:
     feature_importance_ordering = pickle.load(f)
@@ -39,7 +39,7 @@ def predict_brownlow(csv_list):
             print(file)
             player = data['Player']
             player = data['Player']
-            pred = gbr.predict(
+            pred = model.predict(
                 data[list(list(feature_importance_ordering.keys())[36])])
             pred = pd.DataFrame({'player': player, 'predicted_score': pred})
 
