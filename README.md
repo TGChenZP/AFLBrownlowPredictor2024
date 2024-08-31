@@ -2,7 +2,7 @@
 - Author: Lang (Ron) Chen
 - Date: Dec 2022 - Feb 2023; New iteration: Aug 2024
 
-# Introduction**
+# Introduction
 This project predicts the Brownlow Medal winner (AFL's highest individual honour) based on statistics of each AFL game. It makes predictions on a game-by-game basis
 
 # App
