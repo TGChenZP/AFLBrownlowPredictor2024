@@ -66,13 +66,14 @@ The top 5 validation score models were put through evaluations based on the pred
 
 *LGB took too long to run year-by-year backtest and thus was left out despite having 4th highest Validation R<sup>2</sup>*
 
-> Brownlow Score:
+> Brownlow 321_Score:
 > - In each game, add 3/2/1 points if ground truth 3 vote player is predicted with 3/2/1 votes respectively; add 1/2/1 points if ground truth 2 vote player is predicted with 3/2/1 votes respectively; and add 1/0.67/0.33 points if ground truth 1 vote player is predicted with 3/2/1 votes respectively.
 > - The Overall 321_Score for each year is the average of 321_scores from each game
-> - 321_scores has a minimum of 0 and maximum of 6.
+> - 321_scores has a minimum of 0 and maximum of 6. 
+>   - Roughly indicates how many votes were accurately predicted per game, with an emphasis on getting the 3 votes right.
 
 Year-by-year backtest of MLP:
-| Training (2015-) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | 2015 | 3.13 | 3.14 | 2.92 | 3.09 | 3.03 | 3.13 | 3.05 | 2.59 |
 | 2016 | | 3.1 | 2.84 | 3.17 | 2.9 | 3.18 | 3.05 | 2.61 |
@@ -126,21 +127,27 @@ The model thus demonstrates 4/8 correct predicted first, 6/8 Accuracy<sub>top3</
 
 # Interpretation and feature importance
 
-![Local Image](plots/Shap_feature_importance.png)
-![Local Image](plots/Shap_violin.png)
-![Local Image](plots/Shap_scatterplot.png)
+<p align="center">
+  <img src="plots/Shap_feature_importance.png" alt="SHAP Feature Importance" width="45%" />
+  <img src="plots/Shap_scatterplot.png" alt="SHAP Scatter Plot" width="45%" />
+</p>
+
 
 *Assumption: the model has correctly captured the underlying relationship of statistics and Brownlow votes and has low bias.*
 
-The model rates contested posessions most highly - confirming the common intuition that the Brownlow is a midfielders' award; the next most important feature is their disposal quality (measured by effective disposals), which matches the Brownlow Medal's purpose of rewarding the games' most impactful players. Subsequently, marks (posession control aligns with match impact), goals (scoreboard impact aligns with match impact), less clangers (match impact), disposals (favours midfielders and half-backs), tackles are most important. Marks and Goals being top 4 features enable forwards and defenders (alongside disposal as the 6th most important factor) to be in the race for the award.
+***TLDR** (Full Analysis in Appendix)*
 
-Marks inside 50 being the next most important stat favours forwards, while score involvement and one-percenters once again aligns with game impact which is the Medal's purpose.
-
-Hitouts' existence - albeit lower in the pecking order - suggests rucks as the 'rare breed' in the game are still given adequate oppotunity to win the award, but they will need more marks and goals to leverage the lack of posessions compared to midfielders.
-
-Surprisingly, metres gained and intercepts are not rated highly, which hurts the oppotunity for rebounding and intercepting defenders with low disposals to be rewarded with votes. Full backs are also hurt the most as the only important feature which they can rack up stats on are Marks, and intercepts (their equivalent of Goals) having low importance makes them more disadvantaged than their tall forward counterparts.
-
-Kicks also have a positive impact alongside disposals while handballs have negative impact, suggesting umpires generally don't reward the short-handball stat-getters. The logic is similar with Marks being positive and uncontested marks being negative, penalising short chip marks.
+- **Contested Possessions**: Highly rated, confirming the Brownlow as a "Midfielders' award."
+- **Disposal Quality (Effective Disposals)**: Next most important feature, aligning with rewarding impactful players.
+- **Marks & Goals**: Top 4 features, allowing forwards and defenders to be contenders.
+- **Marks Inside 50**: Favors forwards
+- **One-Percenters, Score Involvements, Metres Gained**: Important for match impact, aligning with the Medal's purpose.
+- **Disposals (Contested, Uncontested) & Tackles**: Positive impact on chances of being predicted, emphasizing midfielders' influence.
+- **Tackles Outside 50**: Favors midfielders, disadvantaging defending forwards.
+- **Hitouts**: Important but lower, suggesting rucks need more marks and goals to compensate for lower possession numbers.
+- **Metres Gained & Intercepts**: Surprisingly low importance, which hurts key defenders, particularly those who rely on intercepts (their equivalent of goals) and metres gained for impact.
+- **Kicks vs. Handballs**: Kicks have positive impact, while handballs have negative, indicating umpires don't reward short-handball stat-getters.
+- **Marks vs. Uncontested Marks**: Marks are positive, but uncontested marks are negative, penalizing accumulation through non-impactful play.
 
 
 # Future Directions of Work
@@ -157,9 +164,11 @@ Data Source
 
 - Footywire.com. 2022. AFL Fixture. [online] Available at: <https://www.footywire.com/afl/footy/ft_match_list> [Accessed 26 January 2022].
 
-# *Appendix: Other models' year-by-year backtest*
+# *Appendix*
+
+## *Appendix A: Other models' year-by-year backtest*
 **GBR**
-| Training (2015-) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | 2015 | 2.99 | 3.11 | 2.7 | 3.01 | 2.64 | 3.06 | 2.69 | 2.37 | 
 | 2016 | | 3.21 | 2.87 | 3.08 | 2.78 | 3.15 | 2.9 | 2.5 |
@@ -172,7 +181,7 @@ Data Source
 
 
 **Transformer**
-| Training (2015-) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | 2015 | 2.71 | 2.84 | 2.5 | 2.73 | 2.62 | 2.84 | 2.47 | 2.2 |
 | 2016 | | 2.9 | 2.58 | 2.9 | 2.62 | 2.85 | 2.52| 2.19 |
@@ -185,7 +194,7 @@ Data Source
 
 
 **XGB**
-| Training (2015-) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | 2015 | 2.73 | 2,73 | 2.57 | 2.76 | 2.64 | 2.82 | 2.63 | 2.21|
 | 2016 | | 2.92 | 2.6 | 2.91 | 2.53 | 2.88 | 2.69 | 2.2 |
@@ -198,7 +207,7 @@ Data Source
 
 
 **LR**
-| Training (2015-) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | 2015 | 2.94 | 2.94 | 2.62 | 2.95 | 2.62 | 2.76 | 2.63 | 2.14 |
 | 2016 | | 2.98 | 2.61 | 2.94 | 2.63 | 2.79 | 2.65 | 2.16 |
@@ -210,6 +219,21 @@ Data Source
 | 2022 | | | | | | | | 2.14 |
 
 **Random**
-| Training (2015-) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | N/A | 0.3 | 0.28 | 0.31 | 0.24 | 0.28 | 0.25 | 0.2 | 0.28 |
+
+
+## *Appendix B: Full Analysis*
+
+The model rates contested posessions most highly - confirming the common intuition that the Brownlow is a "Midfielders' award"; the next most important feature is their disposal quality (measured by effective disposals), which matches the Brownlow Medal's purpose of rewarding the games' most impactful players. Subsequently, marks (posession control aligns with match impact), goals (scoreboard impact aligns with match impact), low clangers (match impact), disposals (favours midfielders and half-backs), tackles are most important features for getting votes. Marks and Goals being top 4 features enable forwards and defenders (general and rebounding defenders in particular because disposals are also ranked highly) to be in the race for the award.
+
+Marks inside 50 being the next most important stat favours forwards, while one-percenters, score involvements and metres gained once again aligns with the Medal's purpose of game impact. 
+
+The fact that all of contested posesions, disposals and uncontested disposals have positive impact on chances of being predicted epitomises how it is a midfielders' game; same goes for tackles outside 50 which favours midfielders and disadvantages defending forwards.
+
+Hitouts' existence - albeit lower in the pecking order - suggests rucks as the 'rare breed' in the game are still given adequate oppotunity to win the award, but they will need more marks and goals to make up for their lower posession numbers compared to midfielders.
+
+Surprisingly, metres gained and intercepts are not rated highly, which hurts the oppotunity for rebounding and intercepting defenders who don't pick up lots of disposals to be rewarded with votes. Key backs are also worst done by as the only important feature/stat which they can rack up on are Marks, with Intercepts (their equivalent of Goals) having low importance making them much more disadvantaged than their Key forward counterparts.
+
+In a breakdown of disposals, kicks have a positive impact while handballs have negative, suggesting umpires generally don't reward the short-handball stat-getters. The logic is similar with Marks being positive but uncontested marks being negative, thus penalising accumulation of mark stats through horizontal or backward passes in the defensive half.
