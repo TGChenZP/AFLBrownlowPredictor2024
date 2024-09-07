@@ -51,7 +51,7 @@ Re-Training
 | SVM-p | 0.869  | 0.857  | 0.859  | - | - |
 | NSVM-r|  0.892 | 0.886  | 0.887  | - | - |
 | NSVM-p| 0.860  | 0.860  | 0.861  | - | - |
-| RF    |        |        |        | - | - |
+| RF    | 0.979  | 0.883  | 0.885  | - | - |
 | EXTRF | 0.977  | 0.882  | 0.883  | - | - |
 | LGB   | 0.952  | 0.900  | 0.899  | - | - |
 | HGB   | 0.915  | 0.894  | 0.895  | - | - |
@@ -59,10 +59,10 @@ Re-Training
 | XGB   | 0.939  | 0.897  | 0.897  | 2.78 | 2.32 |
 | CBR   | 0.860  | 0.847  | 0.844  | - | - |
 | GB    | 0.972  | 0.904  | 0.904  | 3.08 | 2.61 |
-| MLP   | 0.909  | **0.905**  | 0.905  | **3.11** | 2.57 |
-| TF    | 0.903  | 0.903  | 0.903  | 2.81 | 2.42 |
+| MLP   | 0.908  | **0.906**  | 0.906  | **3.18** | 2.63 |
+| TF    | 0.893  | 0.893  | 0.893  | 2.9 | 2.29 |
 
-The top 5 validation score models were put through evaluations based on the prediction objective (a Brownlow '321_Score'). Every year from 2016-2022 were used as evaluation set for this score; the model predicting each of these evalution years are trained using all previous years data (see Appendix), and are finally averaged across each year. 
+The top validation score models were put through evaluations based on the prediction objective (a Brownlow '321_Score'). Every year from 2016-2022 were used as evaluation set for this score; the model predicting each of these evalution years are trained using all previous years data (see Appendix), and are finally averaged across each year. 
 
 *LGB took too long to run year-by-year backtest and thus was left out despite having 4th highest Validation R<sup>2</sup>*
 
@@ -75,55 +75,61 @@ The top 5 validation score models were put through evaluations based on the pred
 Year-by-year backtest of MLP:
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
-| 2015 | 3.13 | 3.14 | 2.92 | 3.09 | 3.03 | 3.13 | 3.05 | 2.59 |
-| 2016 | | 3.1 | 2.84 | 3.17 | 2.9 | 3.18 | 3.05 | 2.61 |
-| 2017 | | | 2.99 | 3.13 | 2.92 | 3.18 | 2.93 | 2.47 |
-| 2018 | | | | 3.2 | 3.05 | 3.16 | 3.06 | 2.61|
-| 2019 | | | | | 2.9 | 3.28 | 3.2 | 2.56 |
-| 2020 | | | | | | 3.31 | 3.31 | 2.68 |
-| 2021 | | | | | | | 3.14 | 2.64 |
-| 2022 | | | | | | | | 2.57|
+| 2015 | 3.04 | 3.07 | 2.78 | 3.06 | 2.84 | 2.97 | 2.93 | 2.36 |
+| 2016 | | 3.28 | 2.88 | 3.27 | 3.11 | 3.16 | 3.15 | 2.53 |
+| 2017 | | | 3.00 | 3.41 | 3.18 | 3.26 | 3.24 | 2.6 |
+| 2018 | | | | 3.29 | 3.14 | 3.22 | 3.18 | 2.57|
+| 2019 | | | | | 3.17 | 3.34 | 3.23 | 2.65 |
+| 2020 | | | | | | 3.35 | 3.24 | 2.61 |
+| 2021 | | | | | | | 3.17 | 2.59 |
+| 2022 | | | | | | | | 2.63|
 
 # Results
 MLP was the best model by: 
 
-- evaluation 321_score (3.11 / 6), and also:
-- validation R<sup>2</sup> (0.905 / 1).
+- evaluation 321_score (3.18 / 6), and also:
+- validation R<sup>2</sup> (0.906 / 1).
 
 It also had:
-- test R<sup>2</sup> (0.905/1), and:
-- OOS [*year 2023*] 321_score (2.57 / 6).
+- test R<sup>2</sup> (0.906/1), and:
+- OOS [*year 2023*] 321_score (2.63 / 6).
 
 # Emperical Results
 
 Model trained with 2015-2022 predicted for 2023:
-- 1. Nick Daicos, 29 (True 3rd, 28 votes)
-- 2. Christian Petracca, (True 6th, 26 votes)
-- 3. Andrew Brayshaw, (True 10 votes)
+- 1. Nick Daicos, 31 (True 3rd, 28 votes)
+- 2. Christian Petracca, 29 (True 6th, 26 votes)
+- 3. Zak Butters, 28 (True =4th 27 votes)
 
-- with True 1st (Lachie Neale, 13) at 29th.
+- with True 1st (Lachie Neale, 31) predicted =10th with 21 votes
 
 Noting that 2023 was a poor year for prediction overall, we also record the year-by-year backtest (out of sample) prediction for each year from 2016-2022:
 
 - 2016: **Patrick Dangerfield**, 35 (True 1st, 35 votes)
 
 - 2017: Patrick Dangerfield, 42 (True 2nd, 33 votes)
-    
-    (True winner Dustin Martin was predicted 3rd with 31 votes; True 36 votes)
 
-- 2018: **Tom Mitchell**, 44 (True 1st, 28 votes)
+    (True winner Dustin Martin was predicted 2rd with 37 votes; True 36 votes)
 
-- 2019: **Nat Fyfe**, 35 (True 1st, 33 votes)
+- 2018: Brodie Grundy, 41 (True =10th, 17 votes)
 
-- 2020: **Lachie Neale**, 27 (True 1st, 31 votes)
+    (True winner Tom Mitchell predicted 2nd with 39 votes; True 28 votes)
 
-- 2021: Jack Macrae, 36 (True 23rd, 14 votes)
-    (True Winner Ollie Wines predicted 3rd, 33 votes; True 36 votes)
+- 2019: Brodie Grundy, 30 (True =6th, 23 votes)
 
-- 2022: Lachie Neale, 33 (True 2nd, 28 votes)
-    (True Winner Patrick Cripps predicted 10th, 20 votes; True 29 votes)
+    (True winner Nat Fyfe predicted 4th with 28 votes; True 33 votes)
 
-The model thus demonstrates 4/8 correct predicted first, 6/8 Accuracy<sub>top3</sub>.
+- 2020: **Lachie Neale**, 30 (True 1st, 31 votes)
+
+- 2021: Jack Steele, 33 (True =5th, 26 votes)
+
+    (True Winner Ollie Wines predicted =3rd, 30 votes; True 36 votes)
+
+- 2022: Clayton Oliver, 33 (True =5th, 25 votes)
+
+    (True Winner Patrick Cripps predicted 7th, 23 votes; True 29 votes)
+
+The model thus demonstrates 2/7 correct predicted first, 6/7 Accuracy<sub>top3</sub>.
 
 # Interpretation and feature importance
 
@@ -185,14 +191,14 @@ Data Source
 **Transformer**
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
-| 2015 | 2.71 | 2.84 | 2.5 | 2.73 | 2.62 | 2.84 | 2.47 | 2.2 |
-| 2016 | | 2.9 | 2.58 | 2.9 | 2.62 | 2.85 | 2.52| 2.19 |
-| 2017 | | | 2.61 | 2.94 | 2.72 | 2.94 | 2.66 | 2.29 |
-| 2018 | | | | 2.97 | 2.8 | 3.0 | 2.77 | 2.35 |
-| 2019 | | | | | 2.68 | 2.82 | 2.76 | 2.24 |
-| 2020 | | | | | | 2.95 | 2.86 | 2.36 |
-| 2021 | | | | | | | 2.84 | 2.38 |
-| 2022 | | | | | | | | 2.42 |
+| 2015 | 2.81 | 2.88 | 2.56 | 2.87 | 2.59 | 2.75 | 2.58 | 2.18 |
+| 2016 | | 2.77 | 2.48 | 2.62 | 2.37 | 2.57 | 2.45| 2.03 |
+| 2017 | | | 2.8 | 3.13 | 2.85 | 3.1 | 2.9 | 2.39 |
+| 2018 | | | | 3.09 | 2.81 | 3.22 | 2.9 | 2.44 |
+| 2019 | | | | | 2.73 | 3.07 | 2.79 | 2.24 |
+| 2020 | | | | | | 3.2 | 2.89 | 2.36 |
+| 2021 | | | | | | | 2.92 | 2.22 |
+| 2022 | | | | | | | | 2.29 |
 
 
 **XGB**
