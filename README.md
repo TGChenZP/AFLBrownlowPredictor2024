@@ -141,20 +141,21 @@ The model thus demonstrates 2/7 correct predicted first, 6/7 Accuracy<sub>top3</
 
 *Assumption: the model has correctly captured the underlying relationship of statistics and Brownlow votes and has low bias.*
 
-***TLDR** (Full Analysis in Appendix)*
+***TLDR***
 
 - **Contested Possessions**: Highly rated, confirming the Brownlow as a "Midfielders' award."
-- **Disposal Quality (Effective Disposals)**: Next most important feature, aligning with rewarding impactful players.
-- **Marks & Goals**: Top 4 features, allowing forwards and defenders to be contenders.
-- **Marks Inside 50**: Favors forwards
-- **One-Percenters, Score Involvements, Metres Gained**: Important for match impact, aligning with the Medal's purpose.
+- **Disposal Quality (Effective Disposals)**: Next most important feature, aligning with rewarding impactful players; ineffective disposals are also penalised
+- **Goal & Marks**: Both top-4 features, allowing forwards and defenders to be contenders.
+- **Less clangers**: Aligning with game impact aspect of award
 - **Disposals (Contested, Uncontested) & Tackles**: Positive impact on chances of being predicted, emphasizing midfielders' influence.
-- **Tackles Outside 50**: Favors midfielders, disadvantaging defending forwards.
+    - **Kicks vs. Handballs**: Kicks have positive impact, while handballs have negative, indicating umpires don't reward short-handball stat-getters.
+- **Tackles & Tackles Outside 50**: Favors midfielders, disadvantaging defending forwards.
+- **One-Percenters, Score Involvements, Metres Gained**: Important for match impact, aligning with the Medal's purpose.
+- **Marks Inside 50**: Favors forwards
 - **Hitouts**: Important but lower, suggesting rucks need more marks and goals to compensate for lower possession numbers.
-- **Metres Gained & Intercepts**: Surprisingly low importance, which hurts key defenders, particularly those who rely on intercepts (their equivalent of goals) and metres gained for impact.
-- **Kicks vs. Handballs**: Kicks have positive impact, while handballs have negative, indicating umpires don't reward short-handball stat-getters.
-- **Marks vs. Uncontested Marks**: Marks are positive, but uncontested marks are negative, penalizing accumulation through non-impactful play.
+- **Metres Gained, Intercepts & Rebound 50s**: Surprisingly low importance, which hurts key defenders, particularly those who rely on intercepts (their equivalent of goals) and metres gained for impact.
 
+***Summary***: Contested goal-kicking midfielders who are effective and clean are most advantaged to win the medal; key-backs are worst-off.
 
 # Future Directions of Work
 1. Use Graph Neural Network to do listwise prediction
@@ -230,18 +231,3 @@ Data Source
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | N/A | 0.3 | 0.28 | 0.31 | 0.24 | 0.28 | 0.25 | 0.2 | 0.28 |
-
-
-## *Appendix B: Full Analysis*
-
-The model rates contested posessions most highly - confirming the common intuition that the Brownlow is a "Midfielders' award"; the next most important feature is their disposal quality (measured by effective disposals), which matches the Brownlow Medal's purpose of rewarding the games' most impactful players. Subsequently, marks (posession control aligns with match impact), goals (scoreboard impact aligns with match impact), low clangers (match impact), disposals (favours midfielders and half-backs), tackles are most important features for getting votes. Marks and Goals being top 4 features enable forwards and defenders (general and rebounding defenders in particular because disposals are also ranked highly) to be in the race for the award.
-
-Marks inside 50 being the next most important stat favours forwards, while one-percenters, score involvements and metres gained once again aligns with the Medal's purpose of game impact. 
-
-The fact that all of contested posesions, disposals and uncontested disposals have positive impact on chances of being predicted epitomises how it is a midfielders' game; same goes for tackles outside 50 which favours midfielders and disadvantages defending forwards.
-
-Hitouts' existence - albeit lower in the pecking order - suggests rucks as the 'rare breed' in the game are still given adequate oppotunity to win the award, but they will need more marks and goals to make up for their lower posession numbers compared to midfielders.
-
-Surprisingly, metres gained and intercepts are not rated highly, which hurts the oppotunity for rebounding and intercepting defenders who don't pick up lots of disposals to be rewarded with votes. Key backs are also worst done by as the only important feature/stat which they can rack up on are Marks, with Intercepts (their equivalent of Goals) having low importance making them much more disadvantaged than their Key forward counterparts.
-
-In a breakdown of disposals, kicks have a positive impact while handballs have negative, suggesting umpires generally don't reward the short-handball stat-getters. The logic is similar with Marks being positive but uncontested marks being negative, thus penalising accumulation of mark stats through horizontal or backward passes in the defensive half.
