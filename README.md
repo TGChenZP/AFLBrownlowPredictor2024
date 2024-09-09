@@ -158,11 +158,10 @@ The model thus demonstrates 2/7 correct predicted first, 6/7 Accuracy<sub>top3</
 ***Summary***: Contested goal-kicking midfielders who are effective and clean are most advantaged to win the medal; key-backs are worst-off.
 
 # Future Directions of Work
-1. Use Graph Neural Network to do listwise prediction
 
-2. Add Player Position data (Mid, Ruck, Forward, Back) to condition and thus better discriminate the performance scores based on match stats
+1. Add Player Position data (Mid, Ruck, Forward, Back) to condition and thus better discriminate the performance scores based on match stats
 
-3. Using disposal/running pattern heatmap as input (Computer Vision) could provide a more dynamic positional representation than a discrete label in point 1
+2. Using disposal/running pattern heatmap as input (Computer Vision) could provide a more dynamic positional representation than a discrete label in point 1
 
 
 # Bibliography
