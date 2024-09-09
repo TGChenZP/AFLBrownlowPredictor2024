@@ -12,3 +12,4 @@
 *data/
 future data/
 *models/tmp_models/
+*presentables/raw_predicted_scores/
