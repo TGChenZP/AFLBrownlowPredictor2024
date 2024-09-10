@@ -5,7 +5,7 @@ import os
 from collections import defaultdict as dd
 import sys
 
-with open(f'../models/final_models/retrain_mlp.pickle', 'rb') as f:
+with open(f'../models/final_models/retrain_tfagnn.pickle', 'rb') as f:
     model = pickle.load(f)
 
 with open('../models/feature_importance_ordering.pickle', 'rb') as f:
@@ -17,7 +17,7 @@ csv_list = os.listdir(f'../future data/curated/{manip_type}')
 csv_list.sort()
 
 
-def predict_brownlow(csv_list):
+def predict_brownlow(csv_list, graph=False):
     json_dict = dict()
 
     tally = dd(int)
@@ -36,11 +36,14 @@ def predict_brownlow(csv_list):
             game = team1 + ' v ' + team2
 
             data = pd.read_csv(f'../future data/curated/{manip_type}/{file}')
+            if graph:
+                data['idx'] = 0
             print(file)
             player = data['Player']
             player = data['Player']
             pred = model.predict(
-                data[list(list(feature_importance_ordering.keys())[36])])
+                data[list(list(feature_importance_ordering.keys())[36])+['idx']] if graph
+                else data[list(feature_importance_ordering.keys())[36]])
             pred = pd.DataFrame({'player': player, 'predicted_score': pred})
 
             three_votes = list(pred.sort_values(
@@ -69,7 +72,7 @@ def predict_brownlow(csv_list):
     return json_dict, tally
 
 
-json_dict, tally = predict_brownlow(csv_list)
+json_dict, tally = predict_brownlow(csv_list, graph=True)
 
 
 with open('../presentables/game_by_game_prediction.json', 'w') as f:
