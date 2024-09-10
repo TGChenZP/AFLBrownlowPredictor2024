@@ -59,8 +59,10 @@ Re-Training
 | XGB   | 0.939  | 0.897  | 0.897  | 2.78 | 2.32 |
 | CBR   | 0.860  | 0.847  | 0.844  | - | - |
 | GB    | 0.972  | 0.904  | 0.904  | 3.08 | 2.61 |
-| MLP   | 0.908  | **0.906**  | 0.906  | **3.18** | 2.63 |
+| MLP   | 0.908  | 0.906  | 0.906  | 3.18 | 2.63 |
 | TF    | 0.893  | 0.893  | 0.893  | 2.9 | 2.29 |
+| MLP-AGNN | 0.913 | 0.912 | 0.911 | 3.25| 2.97 |
+| TF-AGNN | 0.916 | **0.916** | 0.914 | **3.27** | 2.86 |
 
 The top validation score models were put through evaluations based on the prediction objective (a Brownlow '321_Score'). Every year from 2016-2022 were used as evaluation set for this score; the model predicting each of these evalution years are trained using all previous years data (see Appendix), and are finally averaged across each year. 
 
@@ -72,7 +74,96 @@ The top validation score models were put through evaluations based on the predic
 > - 321_scores has a minimum of 0 and maximum of 6. 
 >   - Roughly indicates how many votes were accurately predicted per game, with an emphasis on getting the 3 votes right.
 
-Year-by-year backtest of MLP:
+Year-by-year backtest of TF-AGNN:
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
+| 2015 | 3.08 | 3.18 | 2.76 | 3.03 | 2.76 | 2.99 | 3.02 | 2.42 |
+| 2016 | | 3.4 | 2.95 | 3.35 | 3.12 | 3.23 | 3.16 | 2.59 |
+| 2017 | | | 3.06 | 3.4 | 3.2 | 3.34 | 3.25 | 2.67 |
+| 2018 | | | | 3.39 | 3.14 | 3.27 | 3.25 | 2.63|
+| 2019 | | | | | 3.16 | 3.43 | 3.3 | 2.81 |
+| 2020 | | | | | | 3.39 | 3.26 | 2.74 |
+| 2021 | | | | | | | 3.27 | 2.73 |
+| 2022 | | | | | | | | 2.97|
+
+# Results
+TF-AGNN was the best model by: 
+
+- evaluation 321_score (3.27 / 6), and also:
+- validation R<sup>2</sup> (0.916 / 1).
+
+It also had:
+- test R<sup>2</sup> (0.914/1), and:
+- OOS [*year 2023*] 321_score (2.86 / 6).
+
+# Emperical Results
+
+Model trained with 2015-2022 predicted for 2023:
+- 1. Nick Daicos, 33 (True 3rd, 28 votes)
+- 2. Christian Petracca, 31 (True 6th, 26 votes)
+- 3. Rory Laird, 28 (True =4th 27 votes)
+
+- with True 1st (Lachie Neale, 31) predicted =5th with 25 votes
+
+Noting that 2023 was a poor year for prediction overall, we also record the year-by-year backtest (out of sample) prediction for each year from 2016-2022:
+
+- 2016: **Patrick Dangerfield**, 44 (True 1st, 35 votes)
+
+- 2017: Patrick Dangerfield, 40 (True 2nd, 33 votes)
+
+    (True winner Dustin Martin was predicted 2rd with 37 votes; True 36 votes)
+
+- 2018: Brodie Grundy, 41 (True =10th, 17 votes)
+
+    (True winner Tom Mitchell predicted 2nd with 40 votes; True 28 votes)
+
+- 2019: Patrick Dangerfield, 32 (True =6th, 23 votes)
+
+    (True winner Nat Fyfe predicted =3rd with 27 votes; True 33 votes)
+
+- 2020: **Lachie Neale**, 31 (True 1st, 31 votes)
+
+- 2021: Jack Macrae, 37 (True 23rd, 14 votes)
+
+    (True Winner Ollie Wines predicted 3rd, 33 votes; True 36 votes)
+
+- 2022: Lachie Neale, 31 (True =2nd, 28 votes)
+
+    (True Winner Patrick Cripps predicted 5th, 21 votes; True 29 votes)
+
+The model thus demonstrates 2/7 correct predicted first, 6/7 Accuracy<sub>top3</sub>.
+
+# Future Directions of Work
+
+1. Add Player Position data (Mid, Ruck, Forward, Back) to condition and thus better discriminate the performance scores based on match stats
+
+2. Using disposal/running pattern heatmap as input (Computer Vision) could provide a more dynamic positional representation than a discrete label in point 1
+
+
+# Bibliography
+
+Data Source
+
+- AFLTables.com. 2022. Brownlow Votes Round by Round. [online] Available at: <https://afltables.com/afl/brownlow/brownlow_idx.html> [Accessed 26 January 2022].
+
+- Footywire.com. 2022. AFL Fixture. [online] Available at: <https://www.footywire.com/afl/footy/ft_match_list> [Accessed 26 January 2022].
+
+# *Appendix*
+
+## *Appendix A: Other models' year-by-year backtest*
+**MLP-AGNN**
+| 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
+| -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
+| 2015 | 3.21 | 3.28 | 2.93 | 3.25 | 2.94 | 3.31 | 2.98 | 2.53 |
+| 2016 | | 3.3 | 3.08 | 3.19 | 3.12 | 3.31 | 3.33 | 2.6 |
+| 2017 | | | 3.04 | 3.43 | 3.08 | 3.38 | 3.32 | 2.81 |
+| 2018 | | | | 3.45 | 3.06 | 3.49 | 3.3 | 2.78|
+| 2019 | | | | | 3.2 | 3.59 | 3.33 | 2.84 |
+| 2020 | | | | | | 3.37 | 3.36 | 2.84 |
+| 2021 | | | | | | | 3.38 | 2.91 |
+| 2022 | | | | | | | | 2.86|
+
+**MLP**
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | 2015 | 3.04 | 3.07 | 2.78 | 3.06 | 2.84 | 2.97 | 2.93 | 2.36 |
@@ -84,17 +175,7 @@ Year-by-year backtest of MLP:
 | 2021 | | | | | | | 3.17 | 2.59 |
 | 2022 | | | | | | | | 2.63|
 
-# Results
-MLP was the best model by: 
-
-- evaluation 321_score (3.18 / 6), and also:
-- validation R<sup>2</sup> (0.906 / 1).
-
-It also had:
-- test R<sup>2</sup> (0.906/1), and:
-- OOS [*year 2023*] 321_score (2.63 / 6).
-
-# Emperical Results
+*Emperical Results (presented as we do SHAP on this model)*
 
 Model trained with 2015-2022 predicted for 2023:
 - 1. Nick Daicos, 31 (True 3rd, 28 votes)
@@ -131,50 +212,6 @@ Noting that 2023 was a poor year for prediction overall, we also record the year
 
 The model thus demonstrates 2/7 correct predicted first, 6/7 Accuracy<sub>top3</sub>.
 
-# Interpretation and feature importance
-
-<p align="center">
-  <img src="plots/Shap_feature_importance.png" alt="SHAP Feature Importance" width="45%" />
-  <img src="plots/Shap_scatterplot.png" alt="SHAP Scatter Plot" width="45%" />
-</p>
-
-
-*Assumption: the model has correctly captured the underlying relationship of statistics and Brownlow votes and has low bias.*
-
-***TLDR***
-
-- **Contested Possessions**: Highly rated, confirming the Brownlow as a "Midfielders' award."
-- **Disposal Quality (Effective Disposals)**: Next most important feature, aligning with rewarding impactful players; ineffective disposals are also penalised
-- **Goal & Marks**: Both top-4 features, allowing forwards and defenders to be contenders.
-- **Less clangers**: Aligning with game impact aspect of award
-- **Disposals (Contested, Uncontested) & Tackles**: Positive impact on chances of being predicted, emphasizing midfielders' influence.
-    - **Kicks vs. Handballs**: Kicks have positive impact, while handballs have negative, indicating umpires don't reward short-handball stat-getters.
-- **Tackles & Tackles Outside 50**: Favors midfielders, disadvantaging defending forwards.
-- **One-Percenters, Score Involvements, Metres Gained**: Important for match impact, aligning with the Medal's purpose.
-- **Marks Inside 50**: Favors forwards
-- **Hitouts**: Important but lower, suggesting rucks need more marks and goals to compensate for lower possession numbers.
-- **Metres Gained, Intercepts & Rebound 50s**: Surprisingly low importance, which hurts key defenders, particularly those who rely on intercepts (their equivalent of goals) and metres gained for impact.
-
-***Summary***: Contested goal-kicking midfielders who are effective and clean are most advantaged to win the medal; key-backs are worst-off.
-
-# Future Directions of Work
-
-1. Add Player Position data (Mid, Ruck, Forward, Back) to condition and thus better discriminate the performance scores based on match stats
-
-2. Using disposal/running pattern heatmap as input (Computer Vision) could provide a more dynamic positional representation than a discrete label in point 1
-
-
-# Bibliography
-
-Data Source
-
-- AFLTables.com. 2022. Brownlow Votes Round by Round. [online] Available at: <https://afltables.com/afl/brownlow/brownlow_idx.html> [Accessed 26 January 2022].
-
-- Footywire.com. 2022. AFL Fixture. [online] Available at: <https://www.footywire.com/afl/footy/ft_match_list> [Accessed 26 January 2022].
-
-# *Appendix*
-
-## *Appendix A: Other models' year-by-year backtest*
 **GBR**
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
@@ -230,3 +267,29 @@ Data Source
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
 | N/A | 0.3 | 0.28 | 0.31 | 0.24 | 0.28 | 0.25 | 0.2 | 0.28 |
+
+## *Appendix B: Interpretation and feature importance of best non-graph model (MLP)*
+
+<p align="center">
+  <img src="plots/Shap_feature_importance.png" alt="SHAP Feature Importance" width="45%" />
+  <img src="plots/Shap_scatterplot.png" alt="SHAP Scatter Plot" width="45%" />
+</p>
+
+
+*Assumption: the model has correctly captured the underlying relationship of statistics and Brownlow votes and has low bias.*
+
+***TLDR***
+
+- **Contested Possessions**: Highly rated, confirming the Brownlow as a "Midfielders' award."
+- **Disposal Quality (Effective Disposals)**: Next most important feature, aligning with rewarding impactful players; ineffective disposals are also penalised
+- **Goal & Marks**: Both top-4 features, allowing forwards and defenders to be contenders.
+- **Less clangers**: Aligning with game impact aspect of award
+- **Disposals (Contested, Uncontested) & Tackles**: Positive impact on chances of being predicted, emphasizing midfielders' influence.
+    - **Kicks vs. Handballs**: Kicks have positive impact, while handballs have negative, indicating umpires don't reward short-handball stat-getters.
+- **Tackles & Tackles Outside 50**: Favors midfielders, disadvantaging defending forwards.
+- **One-Percenters, Score Involvements, Metres Gained**: Important for match impact, aligning with the Medal's purpose.
+- **Marks Inside 50**: Favors forwards
+- **Hitouts**: Important but lower, suggesting rucks need more marks and goals to compensate for lower possession numbers.
+- **Metres Gained, Intercepts & Rebound 50s**: Surprisingly low importance, which hurts key defenders, particularly those who rely on intercepts (their equivalent of goals) and metres gained for impact.
+
+***Summary***: Contested goal-kicking midfielders who are effective and clean are most advantaged to win the medal; key-backs are worst-off.
