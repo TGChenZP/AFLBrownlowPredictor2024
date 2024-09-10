@@ -64,7 +64,6 @@ Re-Training
 | MLP-AGNN | 0.913 | 0.912 | 0.911 | 3.25| 2.97 |
 | TF-AGNN | 0.916 | **0.916** | 0.914 | **3.27** | 2.86 |
 
-The top validation score models were put through evaluations based on the prediction objective (a Brownlow '321_Score'). Every year from 2016-2022 were used as evaluation set for this score; the model predicting each of these evalution years are trained using all previous years data (see Appendix), and are finally averaged across each year. 
 
 *LGB took too long to run year-by-year backtest and thus was left out despite having 4th highest Validation R<sup>2</sup>*
 
@@ -77,14 +76,14 @@ The top validation score models were put through evaluations based on the predic
 Year-by-year backtest of TF-AGNN:
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
-| 2015 | 3.08 | 3.18 | 2.76 | 3.03 | 2.76 | 2.99 | 3.02 | 2.42 |
-| 2016 | | 3.4 | 2.95 | 3.35 | 3.12 | 3.23 | 3.16 | 2.59 |
-| 2017 | | | 3.06 | 3.4 | 3.2 | 3.34 | 3.25 | 2.67 |
-| 2018 | | | | 3.39 | 3.14 | 3.27 | 3.25 | 2.63|
-| 2019 | | | | | 3.16 | 3.43 | 3.3 | 2.81 |
-| 2020 | | | | | | 3.39 | 3.26 | 2.74 |
-| 2021 | | | | | | | 3.27 | 2.73 |
-| 2022 | | | | | | | | 2.97|
+| 2015 | 3.21 | 3.28 | 2.93 | 3.25 | 2.94 | 3.31 | 2.98 | 2.53 |
+| 2016 | | 3.3 | 3.08 | 3.19 | 3.12 | 3.31 | 3.33 | 2.6 |
+| 2017 | | | 3.04 | 3.43 | 3.08 | 3.38 | 3.32 | 2.81 |
+| 2018 | | | | 3.45 | 3.06 | 3.49 | 3.3 | 2.78|
+| 2019 | | | | | 3.2 | 3.59 | 3.33 | 2.84 |
+| 2020 | | | | | | 3.37 | 3.36 | 2.84 |
+| 2021 | | | | | | | 3.38 | 2.91 |
+| 2022 | | | | | | | | 2.86|
 
 # Results
 TF-AGNN was the best model by: 
@@ -94,14 +93,14 @@ TF-AGNN was the best model by:
 
 It also had:
 - test R<sup>2</sup> (0.914/1), and:
-- OOS [*year 2023*] 321_score (2.86 / 6).
+- OOS [*year 2023*] 321_score (2.86 b / 6).
 
 # Emperical Results
 
 Model trained with 2015-2022 predicted for 2023:
 - 1. Nick Daicos, 33 (True 3rd, 28 votes)
 - 2. Christian Petracca, 31 (True 6th, 26 votes)
-- 3. Rory Laird, 28 (True =4th 27 votes)
+- 3. Rory Laird, 28 (True =15th 20 votes)
 
 - with True 1st (Lachie Neale, 31) predicted =5th with 25 votes
 
@@ -154,14 +153,14 @@ Data Source
 **MLP-AGNN**
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
 | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----   |
-| 2015 | 3.21 | 3.28 | 2.93 | 3.25 | 2.94 | 3.31 | 2.98 | 2.53 |
-| 2016 | | 3.3 | 3.08 | 3.19 | 3.12 | 3.31 | 3.33 | 2.6 |
-| 2017 | | | 3.04 | 3.43 | 3.08 | 3.38 | 3.32 | 2.81 |
-| 2018 | | | | 3.45 | 3.06 | 3.49 | 3.3 | 2.78|
-| 2019 | | | | | 3.2 | 3.59 | 3.33 | 2.84 |
-| 2020 | | | | | | 3.37 | 3.36 | 2.84 |
-| 2021 | | | | | | | 3.38 | 2.91 |
-| 2022 | | | | | | | | 2.86|
+| 2015 | 3.08 | 3.18 | 2.76 | 3.03 | 2.76 | 2.99 | 3.02 | 2.42 |
+| 2016 | | 3.4 | 2.95 | 3.35 | 3.12 | 3.23 | 3.16 | 2.59 |
+| 2017 | | | 3.06 | 3.4 | 3.2 | 3.34 | 3.25 | 2.67 |
+| 2018 | | | | 3.39 | 3.14 | 3.27 | 3.25 | 2.63|
+| 2019 | | | | | 3.16 | 3.43 | 3.3 | 2.81 |
+| 2020 | | | | | | 3.39 | 3.26 | 2.74 |
+| 2021 | | | | | | | 3.27 | 2.73 |
+| 2022 | | | | | | | | 2.97|
 
 **MLP**
 | 2015- (Training) | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | (2023) |
@@ -175,7 +174,7 @@ Data Source
 | 2021 | | | | | | | 3.17 | 2.59 |
 | 2022 | | | | | | | | 2.63|
 
-*Emperical Results (presented as we do SHAP on this model)*
+*Emperical Results (presented as it is the best non-graph model and we intend to perform SHAP on it: see Appendix B)*
 
 Model trained with 2015-2022 predicted for 2023:
 - 1. Nick Daicos, 31 (True 3rd, 28 votes)
