@@ -13,3 +13,4 @@
 future data/
 *models/tmp_models/
 *presentables/raw_predicted_scores/
+presentables/2024_simulated_games.json
