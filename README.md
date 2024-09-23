@@ -11,6 +11,14 @@ This project predicts the Brownlow Medal winner (AFL's highest individual honour
 - You can view game by game prediction by clicking **Game by Game Prediction**
 
 # Method
+<p align="center">
+  <img src="plots/AFL_DeepLearn_Pipeline.jpg" alt="Pipeline"/>
+</p>
+
+<p align="center">
+  <img src="plots/Transformer-AGNN.png" alt="Pipeline"/>
+</p>
+
 1. Data was crawled and scraped from the afltables, and validated by footywire data; data were then stored by game
 2. Additional features were generated 
 3. Train-Val-Test Split - with 70% of games from 2015-2022 used as training data; 15% used as Val and Test respectively.
@@ -36,6 +44,15 @@ Re-Training
 
 11. Retune at users' discretion; but year-by-year backtest demonstrates reasonable robustness in model and hyperparameters.
 
+
+
+## Odds Calculation Methodology
+
+1. **Simulate Game Outcomes**: Use predicted scores as the average and test set errors as the variability (standard deviation) to simulate each game 50,000 times.
+
+2. **Player Performance Distribution**: Determine the chances of key players getting specific vote counts in each game, while considering other players' performances independently.
+
+3. **Season Simulation**: Run 100,000 simulations of the entire season, track the outcomes, and calculate the probabilities based on the average results of these simulations.
 
 
 # Tuning Results (Validation dataset R<sup>2</sup> score)
@@ -86,8 +103,8 @@ Year-by-year backtest of TF-AGNN:
 | 2022 | | | | | | | | 2.86|
 
 # Results
-TF-AGNN was the best model by: 
 
+TF-AGNN was the best model by: 
 - evaluation 321_score (3.27 / 6), and also:
 - validation R<sup>2</sup> (0.916 / 1).
 
