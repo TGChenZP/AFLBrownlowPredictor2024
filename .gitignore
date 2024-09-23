@@ -14,3 +14,7 @@ future data/
 *models/tmp_models/
 *presentables/raw_predicted_scores/
 presentables/2024_simulated_games.json
+presentables/2024_simulated_results.parquet
+presentables/2024_game_by_game_simulation_result.pickle
+presentables/2024_player_distributions.pickle
+presentables/2024_simulated_games.json.gz
