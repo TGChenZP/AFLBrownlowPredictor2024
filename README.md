@@ -155,6 +155,10 @@ The model thus demonstrates 2/7 correct predicted first, 6/7 Accuracy<sub>top3</
 
 2. Using disposal/running pattern heatmap as input (Computer Vision) could provide a more dynamic positional representation than a discrete label in point 1
 
+3. Fix model positive bias towards Rucks
+
+4. Update sampling strategy to improve probability estimates
+
 
 # Bibliography
 
