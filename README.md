@@ -48,7 +48,7 @@ Re-Training
 
 ## Odds Calculation Methodology
 
-1. **Simulate Game Outcomes**: Use predicted scores as the average and test set errors as the variability (standard deviation) to simulate each game 50,000 times.
+1. **Simulate Game Outcomes**: Use predicted scores as the mean and test set errors as the variability (standard deviation) to simulate each game 50,000 times.
 
 2. **Player Performance Distribution**: Determine the chances of key players getting specific vote counts in each game, while considering other players' performances independently.
 
